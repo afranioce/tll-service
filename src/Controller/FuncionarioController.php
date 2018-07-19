@@ -8,8 +8,7 @@ use App\Repository\FuncionarioRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security;
+use Nelmio\ApiDocBundle\Annotation as Doc;
 use Swagger\Annotations as SWG;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
@@ -30,7 +29,7 @@ class FuncionarioController extends FOSRestController
      *     description="Retorna a lista de funcionários",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref=@Model(type=Funcionario::class, groups={"full"}))
+     *         @SWG\Items(ref=@Doc\Model(type=Funcionario::class, groups={"full"}))
      *     )
      * )
      */
@@ -46,7 +45,7 @@ class FuncionarioController extends FOSRestController
      * @SWG\Response(
      *     response=200,
      *     description="Retorna o funcionário criado",
-     *     @Model(type=Funcionario::class)
+     *     @Doc\Model(type=Funcionario::class)
      * )
      */
     public function new(Request $request)
@@ -72,7 +71,7 @@ class FuncionarioController extends FOSRestController
      * @SWG\Response(
      *     response=200,
      *     description="Retorna o funcionário",
-     *     @Model(type=Funcionario::class)
+     *     @Doc\Model(type=Funcionario::class)
      * )
      */
     public function show(Funcionario $funcionario)
@@ -85,7 +84,7 @@ class FuncionarioController extends FOSRestController
      * @SWG\Response(
      *     response=200,
      *     description="Retorna o funcionário editado",
-     *     @Model(type=Funcionario::class)
+     *     @Doc\Model(type=Funcionario::class)
      * )
      */
     public function edit(Request $request, Funcionario $funcionario)
