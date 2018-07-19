@@ -29,7 +29,7 @@ class FuncionarioController extends FOSRestController
      *     description="Retorna a lista de funcionários",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref=@Doc\Model(type=Funcionario::class, groups={"full"}))
+     *         @SWG\Items(ref=@Doc\Model(type=Funcionario::class))
      *     )
      * )
      */
@@ -40,12 +40,20 @@ class FuncionarioController extends FOSRestController
     }
 
     /**
+     * Cadastrar de funcioário
+     *
      * @FOSRest\Post()
      *
      * @SWG\Response(
      *     response=200,
      *     description="Retorna o funcionário criado",
      *     @Doc\Model(type=Funcionario::class)
+     * )
+     * @SWG\Parameter(
+     *     name="form",
+     *     in="body",
+     *     description="Formulário para criar funcionário",
+     *     @Doc\Model(type=App\Form\FuncionarioType::class)
      * )
      */
     public function new(Request $request)
@@ -54,7 +62,7 @@ class FuncionarioController extends FOSRestController
         $form = $this->createForm(FuncionarioType::class, $funcionario);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($funcionario);
             $em->flush();
@@ -66,6 +74,8 @@ class FuncionarioController extends FOSRestController
     }
 
     /**
+     * Ver funcionário
+     *
      * @FOSRest\Get("/{id}")
      *
      * @SWG\Response(
@@ -80,11 +90,20 @@ class FuncionarioController extends FOSRestController
     }
 
     /**
+     * Editar funcionário
+     *
      * @FOSRest\Put("/{id}")
+     *
      * @SWG\Response(
      *     response=200,
      *     description="Retorna o funcionário editado",
      *     @Doc\Model(type=Funcionario::class)
+     * )
+     * @SWG\Parameter(
+     *     name="funcionario",
+     *     in="body",
+     *     description="Formulário par editar funcionário",
+     *     @Doc\Model(type=App\Form\FuncionarioType::class)
      * )
      */
     public function edit(Request $request, Funcionario $funcionario)
@@ -92,7 +111,7 @@ class FuncionarioController extends FOSRestController
         $form = $this->createForm(FuncionarioType::class, $funcionario);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             return $funcionario;
@@ -102,6 +121,8 @@ class FuncionarioController extends FOSRestController
     }
 
     /**
+     * Excluir funcionário
+     *
      * @FOSRest\Delete("/{id}")
      *
      * @SWG\Response(

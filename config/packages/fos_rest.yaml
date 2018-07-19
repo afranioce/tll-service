@@ -1,4 +1,6 @@
 fos_rest:
+    # disable_csrf_role: ROLE_API
+    disable_csrf_role: IS_AUTHENTICATED_ANONYMOUSLY # Usuários anonimos
     routing_loader:
         default_format: json
         include_format: false

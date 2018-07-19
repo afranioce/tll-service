@@ -23,4 +23,13 @@ class FuncionarioType extends AbstractType
             'data_class' => Funcionario::class,
         ]);
     }
+
+    /**
+     * This will remove formTypeName from the form
+     * @return null
+     */
+    public function getBlockPrefix()
+    {
+        return null;
+    }
 }
