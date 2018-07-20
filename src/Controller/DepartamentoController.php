@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Funcionario;
-use App\Form\FuncionarioType;
-use App\Repository\FuncionarioRepository;
+use App\Entity\Departamento;
+use App\Form\DepartamentoType;
+use App\Repository\DepartamentoRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,113 +15,113 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
 use FOS\RestBundle\Controller\FOSRestController;
 
 /**
- * @Route("/api/funcionarios")
- * @SWG\Tag(name="funcionarios")
+ * @Route("/api/departamentos")
+ * @SWG\Tag(name="departamentos")
  */
-class FuncionarioController extends FOSRestController
+class DepartamentoController extends FOSRestController
 {
     /**
-     * Lista de funcionários
+     * Lista de departamentos
      * @FOSRest\Get()
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Retorna a lista de funcionários",
+     *     description="Retorna a lista de departamentos",
      *     @SWG\Schema(
      *         type="array",
-     *         @SWG\Items(ref=@Doc\Model(type=Funcionario::class))
+     *         @SWG\Items(ref=@Doc\Model(type=Departamento::class))
      *     )
      * )
      */
-    public function index(FuncionarioRepository $funcionarioRepository)
+    public function index(DepartamentoRepository $departamentoRepository)
     {
-        $funcionarios = $funcionarioRepository->findAll();
-        return new View($funcionarios, Response::HTTP_OK);
+        $departamentos = $departamentoRepository->findAll();
+        return new View($departamentos, Response::HTTP_OK);
     }
 
     /**
-     * Cadastrar funcionário
+     * Cadastrar departamento
      *
      * @FOSRest\Post()
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Retorna o funcionário criado",
-     *     @Doc\Model(type=Funcionario::class)
+     *     description="Retorna o departamento criado",
+     *     @Doc\Model(type=Departamento::class)
      * )
      * @SWG\Parameter(
      *     name="form",
      *     in="body",
-     *     description="Formulário para criar funcionário",
-     *     @Doc\Model(type=App\Form\FuncionarioType::class)
+     *     description="Formulário para criar departamento",
+     *     @Doc\Model(type=App\Form\DepartamentoType::class)
      * )
      */
     public function new(Request $request)
     {
-        $funcionario = new Funcionario();
-        $form = $this->createForm(FuncionarioType::class, $funcionario);
+        $departamento = new Departamento();
+        $form = $this->createForm(DepartamentoType::class, $departamento);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($funcionario);
+            $em->persist($departamento);
             $em->flush();
 
-            return $funcionario;
+            return $departamento;
         }
 
         return new View($form->getErrors(), Response::HTTP_BAD_REQUEST);
     }
 
     /**
-     * Ver funcionário
+     * Ver departamento
      *
      * @FOSRest\Get("/{id}")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Retorna o funcionário",
-     *     @Doc\Model(type=Funcionario::class)
+     *     description="Retorna o departamento",
+     *     @Doc\Model(type=Departamento::class)
      * )
      */
-    public function show(Funcionario $funcionario)
+    public function show(Departamento $departamento)
     {
-        return $funcionario;
+        return $departamento;
     }
 
     /**
-     * Editar funcionário
+     * Editar departamento
      *
      * @FOSRest\Put("/{id}")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Retorna o funcionário editado",
-     *     @Doc\Model(type=Funcionario::class)
+     *     description="Retorna o departamento editado",
+     *     @Doc\Model(type=Departamento::class)
      * )
      * @SWG\Parameter(
      *     name="form",
      *     in="body",
-     *     description="Formulário para editar funcionário",
-     *     @Doc\Model(type=App\Form\FuncionarioType::class)
+     *     description="Formulário para editar departamento",
+     *     @Doc\Model(type=App\Form\DepartamentoType::class)
      * )
      */
-    public function edit(Request $request, Funcionario $funcionario)
+    public function edit(Request $request, Departamento $departamento)
     {
-        $form = $this->createForm(FuncionarioType::class, $funcionario);
+        $form = $this->createForm(DepartamentoType::class, $departamento);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $funcionario;
+            return $departamento;
         }
 
         return new View($form->getErrors(), Response::HTTP_BAD_REQUEST);
     }
 
     /**
-     * Excluir funcionário
+     * Excluir departamento
      *
      * @FOSRest\Delete("/{id}")
      *
@@ -130,11 +130,11 @@ class FuncionarioController extends FOSRestController
      *     description="Retorna vazio"
      * )
      */
-    public function delete(Request $request, Funcionario $funcionario)
+    public function delete(Request $request, Departamento $departamento)
     {
         try {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($funcionario);
+            $em->remove($departamento);
             $em->flush();
     
             return new View(null, Response::HTTP_NO_CONTENT);
