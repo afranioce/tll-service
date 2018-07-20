@@ -3,16 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Funcionario;
+use App\Entity\Movimentacao;
 use App\Form\FuncionarioType;
+use FOS\RestBundle\View\View;
+use Swagger\Annotations as SWG;
 use App\Repository\FuncionarioRepository;
+use App\Repository\MovimentacaoRepository;
+use Nelmio\ApiDocBundle\Annotation as Doc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Nelmio\ApiDocBundle\Annotation as Doc;
-use Swagger\Annotations as SWG;
-use FOS\RestBundle\View\View;
-use FOS\RestBundle\Controller\Annotations as FOSRest;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as FOSRest;
 
 /**
  * @Route("/api/funcionarios")
@@ -142,4 +144,24 @@ class FuncionarioController extends FOSRestController
             return new View($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * Listar movimentações do funcionário
+     * @FOSRest\Get("/{id}/movimentacoes")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retorna a lista de movimentações de um funcionário",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Doc\Model(type=Movimentacao::class))
+     *     )
+     * )
+     */
+    public function movimentacoes(Funcionario $funcionario, MovimentacaoRepository $movimentacaoRepository)
+    {
+        $movimentacoes = $movimentacaoRepository->encontrarPorFuncionario($funcionario->getId());
+        return new View($movimentacoes, Response::HTTP_OK);
+    }
+
 }

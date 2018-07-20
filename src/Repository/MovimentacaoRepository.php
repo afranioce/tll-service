@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Movimentacao;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Model\SituacaoInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Movimentacao|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,22 +20,21 @@ class MovimentacaoRepository extends ServiceEntityRepository
         parent::__construct($registry, Movimentacao::class);
     }
 
-//    /**
-//     * @return Movimentacao[] Returns an array of Movimentacao objects
-//     */
-    /*
-    public function findByExampleField($value)
+   /**
+    * @return Movimentacao[] Returns an array of Movimentacao objects
+    */
+    public function encontrarPorFuncionario(int $funcionarioId)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('m.funcionario = :funcionario AND m.situacao = :situacao')
+            ->setParameters([
+                'funcionario' => $funcionarioId,
+                'stuacao' => SituacaoInterface::SITUACAO_ATIVO
+            ])
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Movimentacao
