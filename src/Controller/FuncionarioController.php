@@ -110,7 +110,7 @@ class FuncionarioController extends FOSRestController
      */
     public function edit(Request $request, Funcionario $funcionario)
     {
-        $form = $this->createForm(FuncionarioType::class, $funcionario);
+        $form = $this->createForm(FuncionarioType::class, $funcionario, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

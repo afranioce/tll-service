@@ -108,7 +108,7 @@ class DepartamentoController extends FOSRestController
      */
     public function edit(Request $request, Departamento $departamento)
     {
-        $form = $this->createForm(DepartamentoType::class, $departamento);
+        $form = $this->createForm(DepartamentoType::class, $departamento, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

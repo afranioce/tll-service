@@ -109,7 +109,7 @@ class MovimentacaoController extends Controller
      */
     public function edit(Request $request, Movimentacao $movimentacao)
     {
-        $form = $this->createForm(MovimentacaoType::class, $movimentacao);
+        $form = $this->createForm(MovimentacaoType::class, $movimentacao, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -38,7 +38,7 @@ class BaseEntitySubscriber implements EventSubscriber
 
         if ($entidade instanceof BaseEntity) {
             $entidade->setCriadoEm(new \DateTime());
-            $entidade->setCriadoPor($this->tokenStorage->getToken()->getUser());
+            // $entidade->setCriadoPor($this->tokenStorage->getToken()->getUser());
         }
     }
 
@@ -48,7 +48,7 @@ class BaseEntitySubscriber implements EventSubscriber
         $entidade = $args->getEntity();
 
         if ($entidade instanceof BaseEntity) {
-            $entidade->setUpdatedAt(new \DateTime());
+            $entidade->setAtualizadoEm(new \DateTime());
             $usuario = $this->tokenStorage->getToken()->getUser();
             if ($usuario instanceof User) {
                 $entidade->setAtualizadoPor($usuario);
