@@ -16,7 +16,7 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
 use FOS\RestBundle\Controller\FOSRestController;
 
 /**
- * @Route("/api/movimentacao")
+ * @Route("/api/movimentacoes")
  * @SWG\Tag(name="movimentacoes")
  */
 class MovimentacaoController extends Controller

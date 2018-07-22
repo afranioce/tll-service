@@ -29,7 +29,7 @@ class MovimentacaoRepository extends ServiceEntityRepository
             ->andWhere('m.funcionario = :funcionario AND m.situacao = :situacao')
             ->setParameters([
                 'funcionario' => $funcionarioId,
-                'stuacao' => SituacaoInterface::SITUACAO_ATIVO
+                'situacao' => SituacaoInterface::SITUACAO_ATIVO
             ])
             ->getQuery()
             ->getResult()
