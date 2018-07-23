@@ -35,7 +35,7 @@ abstract class BaseEntity implements SituacaoInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Usuario", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn()
      * @JMS\Exclude()
      */
     protected $criadoPor;
